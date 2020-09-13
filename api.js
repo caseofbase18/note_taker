@@ -21,7 +21,14 @@ router.post("/api/notes", function (req, res) {
 });
 
 router.delete("/api/notes/:id", function (req, res) {
-    res.send(req.params)
+    for(let i=0; i < notes.length; i++) {
+        if (req.params.id == notes[i].id){
+            notes.splice(i,1)
+        } 
+    }
+    fs.writeFile("./db/db.json", JSON.stringify(notes), function (error, data) {
+        if (error) throw error
+        res.send("note deleted");
 });
-
+});
 module.exports = router;
